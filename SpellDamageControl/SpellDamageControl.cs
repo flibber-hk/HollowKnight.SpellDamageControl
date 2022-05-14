@@ -35,6 +35,8 @@ namespace SpellDamageControl
 
         private void ModifyFireballDamage(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
         {
+            orig(self);
+
             if (self.FsmName == "Fireball Control" && self.gameObject.name == "Fireball")
             {
                 SetFsmInt[] damageSetters = self.Fsm.GetState("Set Damage").Actions.OfType<SetFsmInt>().ToArray();
