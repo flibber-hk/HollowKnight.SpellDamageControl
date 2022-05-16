@@ -30,10 +30,10 @@ namespace SpellDamageControl
         {
             Log("Initializing Mod...");
 
-            On.PlayMakerFSM.OnEnable += ModifyFireballDamage;
+            On.PlayMakerFSM.OnEnable += ModifySpellDamage;
         }
 
-        private void ModifyFireballDamage(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
+        private void ModifySpellDamage(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
         {
             orig(self);
 
@@ -48,6 +48,18 @@ namespace SpellDamageControl
                 SetFsmInt[] damageSetters = self.Fsm.GetState("Set Damage").Actions.OfType<SetFsmInt>().ToArray();
                 damageSetters[0].setValue.Value = GS.ShadeSoul;
                 damageSetters[1].setValue.Value = GS.ShadeSoulShaman;
+            }
+            else if (self.FsmName == "Set Damage" && self.transform.parent is not null && self.transform.parent.name == "Scr Heads")
+            {
+                SetFsmInt[] damageSetters = self.Fsm.GetState("Set Damage").Actions.OfType<SetFsmInt>().ToArray();
+                damageSetters[0].setValue.Value = GS.HowlingWraiths;
+                damageSetters[1].setValue.Value = GS.HowlingWraithsShaman;
+            }
+            else if (self.FsmName == "Set Damage" && self.transform.parent is not null && self.transform.parent.name == "Scr Heads 2")
+            {
+                SetFsmInt[] damageSetters = self.Fsm.GetState("Set Damage").Actions.OfType<SetFsmInt>().ToArray();
+                damageSetters[0].setValue.Value = GS.AbyssShriek;
+                damageSetters[1].setValue.Value = GS.AbyssShriekShaman;
             }
         }
     }
